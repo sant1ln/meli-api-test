@@ -8,7 +8,8 @@ export class ItemsRoutes{
     const router = Router();
     const items: ItemsController = new ItemsController();
 
-    router.get('/', items.getAll)
+    router.get('/', items.getSearch)
+    router.get('/:id', items.getDetailt)
 
     return router;
   }
