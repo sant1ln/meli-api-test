@@ -1,4 +1,4 @@
-export const MELI_API = 'https://api.mercadolibre.com/sites/MLA'
+export const MELI_API = 'https://api.mercadolibre.com/'
 
 export const SIGNATURE = {
   "author": {

@@ -13,7 +13,7 @@ const separateDecimals = (number: number): number => {
 
 }
 
-export const buildRequest = (meliResponse: any): SearchResponse => {
+export const buildSearchResponse = (meliResponse: any): SearchResponse => {
 
   const {
     results,
@@ -43,5 +43,43 @@ export const buildRequest = (meliResponse: any): SearchResponse => {
     items
   }
 
-  return response
+  return response;
+}
+
+export const buildProductResponse = (product: any, productDesc:any)=> {
+
+  const {
+    id,
+    title,
+    price,
+    currency_id,
+    thumbnail,
+    condition,
+    shipping,
+    initial_quantity
+  } = product;
+
+  const {
+    plain_text
+  } = productDesc;
+
+  const response = {
+    ...SIGNATURE,
+    item: {
+      id,
+      title,
+      price: {
+        currency_id,
+        amount: parseInt(price),
+        decimals: separateDecimals(price),
+      },
+      picture: thumbnail,
+      condition,
+      free_shipping: shipping.free_shipping,
+      sold_quantity: initial_quantity,
+      description: plain_text
+      }      
+  }
+
+  return response;
 }
