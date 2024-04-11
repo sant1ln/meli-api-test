@@ -14,10 +14,13 @@ export class ItemsController {
     try {
       const meliResponse = await fetch(searchEndPoint)
       const result = await meliResponse.json();
-      const response = buildSearchResponse(result);
+      const categoryID = result.results[0].category_id;
+      const categories = await fetch(`${MELI_API}categories/${categoryID}`)
+      const categoriesResult = await categories.json();      
+      const response = buildSearchResponse(result,categoriesResult);
       res.status(200).json(response)
     } catch (error) {
-      res.status(500).json({ Error: 'Ups, something went wrong' })
+      res.status(500).json({ Error: 'Something wend wrong'})
     }
 
   }

@@ -1,5 +1,6 @@
 import { SIGNATURE } from "../constants";
 import { Item, SearchResponse } from "../interfaces/interfaces";
+import { getCategories, getUser } from "./services";
 
 const separateDecimals = (number: number): number => {
   let numberToString = number.toString();
@@ -13,14 +14,13 @@ const separateDecimals = (number: number): number => {
 
 }
 
-export const buildSearchResponse = (meliResponse: any): SearchResponse => {
+export const buildSearchResponse = (meliResponse: any, categoriesResponse: any): SearchResponse => {
 
-  const {
-    results,
-    available_filters: values
-  } = meliResponse;
+  const { results } = meliResponse;
 
-  const categories = values.map((value: any) => value.name)
+  const { path_from_root} = categoriesResponse;
+
+  const categories = path_from_root.map((value: any) => value.name)
 
   const items: Item[] = results.slice(0, 4).map((value: any) => {
       return {
