@@ -36,14 +36,11 @@ export class ItemsController {
       const productResponse = await product.json()
       const productDesc = await fetch(productEndpointDesc);
       const productDescResponse = await productDesc.json();
-
-      if (productResponse) {
-        const response = buildProductResponse(productResponse, productDescResponse)
+      const categoryID = productResponse.category_id;
+      const categories = await fetch(`${MELI_API}categories/${categoryID}`)
+      const categoriesResult = await categories.json();     
+      const response = buildProductResponse(productResponse, productDescResponse, categoriesResult)
         res.status(200).json(response);
-      }else{
-        res.status(404).json({Error: 'Product not found'})
-      }
-
     } catch (error) {
       res.status(500).json({ Error: 'Something went wrong' })
     }

@@ -20,7 +20,7 @@ export const buildSearchResponse = (meliResponse: any, categoriesResponse: any):
 
   const { path_from_root} = categoriesResponse;
 
-  const categories = path_from_root.map((value: any) => value.name)
+  //const categories = path_from_root.map((value: any) => value.name)
 
   const items: Item[] = results.slice(0, 4).map((value: any) => {
       return {
@@ -39,14 +39,14 @@ export const buildSearchResponse = (meliResponse: any, categoriesResponse: any):
 
   const response = {
     ...SIGNATURE,
-    categories,
+    categories: path_from_root,
     items
   }
 
   return response;
 }
 
-export const buildProductResponse = (product: any, productDesc:any)=> {
+export const buildProductResponse = (product: any, productDesc:any, categoriesResponse:any)=> {
 
   const {
     id,
@@ -63,8 +63,11 @@ export const buildProductResponse = (product: any, productDesc:any)=> {
     plain_text
   } = productDesc;
 
+  const { path_from_root} = categoriesResponse;
+
   const response = {
     ...SIGNATURE,
+    categories: path_from_root,
     item: {
       id,
       title,
